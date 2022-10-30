@@ -1,4 +1,4 @@
-import { createSignal, createEffect } from 'solid-js';
+import { createSignal, createEffect, createMemo } from 'solid-js';
 import styles from './App.module.css';
 import ChartBase from './ChartBase';
 import XAxis from './XAxis';
@@ -34,12 +34,12 @@ function App() {
 
 
 
-  const xScale = () => {
+  const xScale = createMemo(() => {
     console.log("recalc", width())
     return scaleLinear()
     .domain([0, data.length - 1]) // input
     .range([0 + transform.x, (innerWidth()) * transform.k + transform.x]);
-  };
+  });
 
   const yScale = scaleLinear()
     .domain([Math.min(...data), Math.max(...data)]) // input
