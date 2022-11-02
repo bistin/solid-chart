@@ -24,7 +24,7 @@ function XAxis(props) {
   const tickPadding = props.tickPadding ?? 3;
   const spacing = Math.max(tickSizeInner, 0) + tickPadding;
   const yOffset = props.params.height;
-  const [local, others] = splitProps(props, ["xScale", "xTicks"]);
+  const [local] = splitProps(props, ["xScale", "xTicks"]);
   const ticks = local.xScale?.ticks?.(local.xTicks) || local.xScale?.domain?.() || null;
   const range = () => local.xScale?.range?.();
   const tickFormat = props.xTickFormat || ((x) => x);

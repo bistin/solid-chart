@@ -25,20 +25,13 @@ function App() {
   const margin = { top: 10, right: 30, bottom: 30, left: 50 };
   const transform = { x: 0, y: 0, k: 1 };
 
-  const innerWidth =  () => width() - margin.left - margin.right;
+  const innerWidth = () => width() - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
 
-  createEffect(() => {
-    console.log("The count is now", width());
-  });
-
-
-
   const xScale = createMemo(() => {
-    console.log("recalc", width())
     return scaleLinear()
-    .domain([0, data.length - 1]) // input
-    .range([0 + transform.x, (innerWidth()) * transform.k + transform.x]);
+      .domain([0, data.length - 1]) // input
+      .range([0 + transform.x, (innerWidth()) * transform.k + transform.x]);
   });
 
   const yScale = scaleLinear()
@@ -49,22 +42,18 @@ function App() {
 
   return (
     <div class={styles.App}>
-      {/* <ChartBase
+      <ChartBase
         width={width()}
-        height={height} */}
-        {/* margin={margin}> */}
+        height={height}
+        margin={margin}> 
         <svg width={width()} height={height}>
-        <XAxis params={params()} xScale={xScale()} />
+          <XAxis params={params()} xScale={xScale()} />
         </svg>
-
-       
-
-      {/* </ChartBase> */}
-
+      </ChartBase>
       <button
           onClick={() => setWidth((w) => w + 10)}
         >wider</button>
-    </div>
+    </div >
   );
 }
 
