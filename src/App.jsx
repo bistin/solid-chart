@@ -22,12 +22,12 @@ const data = data2.map((d) => d.y1);
 
 function App() {
   const [width, setWidth] = createSignal(600);
-  const height = 200;
+  const [height, setHeight] = createSignal(200);
   const margin = { top: 10, right: 30, bottom: 30, left: 50 };
   const transform = { x: 0, y: 0, k: 1 };
 
   const innerWidth = () => width() - margin.left - margin.right;
-  const innerHeight = height - margin.top - margin.bottom;
+  const innerHeight =  () => height() - margin.top - margin.bottom;
 
   const xScale = createMemo(() => {
     return scaleLinear()
@@ -38,23 +38,24 @@ function App() {
   const yScale = createMemo(() => {
     return scaleLinear()
       .domain([Math.min(...data), Math.max(...data)]) // input
-      .range([innerHeight, 0]); // output
+      .range([innerHeight(), 0]); // output
   });
-  const params = () => ({ width: (innerWidth()), height: innerHeight, className: "temp" });
+  const params = () => ({ width: (innerWidth()), height: innerHeight(), className: "temp" });
 
   return (
+
     <div class={styles.App}>
+      <button onClick={() => setWidth((w) => w + 10)} >wider</button>
+      <button onClick={() => setHeight((h) => h + 10)} >taller</button>
       <ChartBase
         width={width()}
-        height={height}
+        height={height()}
         margin={margin}>
-          <XAxis params={params()} xScale={xScale()} />
-          <YAxis params={params()} yScale={yScale()} />
-          <YAxis params={params()} yScale={yScale()} orient="right" />
+        <XAxis params={params()} xScale={xScale()} />
+        <YAxis params={params()} yScale={yScale()} />
+        <YAxis params={params()} yScale={yScale()} orient="right" />
       </ChartBase>
-      <button
-        onClick={() => setWidth((w) => w + 10)}
-      >wider</button>
+
     </div >
   );
 }

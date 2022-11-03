@@ -23,8 +23,9 @@ function XAxis(props) {
   const tickSizeOuter = props.tickSizeOuter ?? 6;
   const tickPadding = props.tickPadding ?? 3;
   const spacing = Math.max(tickSizeInner, 0) + tickPadding;
-  const yOffset = props.params.height;
-  const [local] = splitProps(props, ["xScale", "xTicks"]);
+  
+  const [local] = splitProps(props, ["xScale", "xTicks", "params"]);
+  const yOffset = ()=> local.params.height;
   const ticks = local.xScale?.ticks?.(local.xTicks) || local.xScale?.domain?.() || null;
   const range = () => local.xScale?.range?.();
   const tickFormat = props.xTickFormat || ((x) => x);
@@ -46,7 +47,7 @@ function XAxis(props) {
   return (
     <g
       class="x axis"
-      transform={`translate(0,${yOffset})`}
+      transform={`translate(0,${yOffset()})`}
       fill="none"
       font-size="10"
       font-family="sans-serif"
