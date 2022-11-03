@@ -2,6 +2,7 @@ import { createSignal, createEffect, createMemo } from 'solid-js';
 import styles from './App.module.css';
 import ChartBase from './ChartBase';
 import XAxis from './XAxis';
+import YAxis from './YAxis';
 import { scaleLinear } from 'd3-scale';
 
 const data2 = [
@@ -34,10 +35,11 @@ function App() {
       .range([0 + transform.x, (innerWidth()) * transform.k + transform.x]);
   });
 
-  const yScale = scaleLinear()
-    .domain([Math.min(...data), Math.max(...data)]) // input
-    .range([innerHeight, 0]); // output
-
+  const yScale = createMemo(() => {
+    return scaleLinear()
+      .domain([Math.min(...data), Math.max(...data)]) // input
+      .range([innerHeight, 0]); // output
+  });
   const params = () => ({ width: (innerWidth()), height: innerHeight, className: "temp" });
 
   return (
@@ -45,14 +47,14 @@ function App() {
       <ChartBase
         width={width()}
         height={height}
-        margin={margin}> 
-        <svg width={width()} height={height}>
+        margin={margin}>
           <XAxis params={params()} xScale={xScale()} />
-        </svg>
+          <YAxis params={params()} yScale={yScale()} />
+          <YAxis params={params()} yScale={yScale()} orient="right" />
       </ChartBase>
       <button
-          onClick={() => setWidth((w) => w + 10)}
-        >wider</button>
+        onClick={() => setWidth((w) => w + 10)}
+      >wider</button>
     </div >
   );
 }
