@@ -52,7 +52,7 @@ function YAxis(props) {
     ? 'M' + k * tickSizeOuter + ',' + range0() + 'H0.5V' + range1() + 'H' + k * tickSizeOuter
     : 'M0.5,' + range0() + 'V' + range1();
 
-  const label = getLabel(props.label, props.customRange, range(), textX, values(), orient)
+  const label = getLabel(props.label, props.customRange, range(), textX, values(), orient);
   return (
     <g
       class="y axis"

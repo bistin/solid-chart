@@ -3,6 +3,7 @@ import styles from './App.module.css';
 import ChartBase from './ChartBase';
 import XAxis from './XAxis';
 import YAxis from './YAxis';
+import GraphPath from './GraphPath';
 import { scaleLinear } from 'd3-scale';
 
 const data2 = [
@@ -42,6 +43,10 @@ function App() {
   });
   const params = () => ({ width: (innerWidth()), height: innerHeight(), className: "temp" });
 
+  const scale = () => ({xScale: xScale(), yScale: yScale()});
+
+  const defined = (r, i) => { return i != 3 && i != 7;};
+
   return (
 
     <div class={styles.App}>
@@ -54,6 +59,19 @@ function App() {
         <XAxis params={params()} xScale={xScale()} />
         <YAxis params={params()} yScale={yScale()} />
         <YAxis params={params()} yScale={yScale()} orient="right" />
+
+        <GraphPath
+          stroke="#ff0000"
+          stroke-width="2"
+          fill="none"
+
+          defined={defined}
+          xKey="x"
+          yKey="y1"
+          scale={scale()}
+          data={data2}
+        />
+
       </ChartBase>
 
     </div >
